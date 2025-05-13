@@ -45,8 +45,43 @@ class ModelTrainer:
                 'XGBRegressor': XGBRegressor(),
                 'CatBoostRegressor': CatBoostRegressor(verbose=0)
             }
+            parameters = {
+                'RandomForestRegressor': {
+                    'n_estimators': [10, 50, 100],
+                    'max_features': ['sqrt', 'log2'],
+                    'max_depth': [None, 10, 20, 30]
+                },
+                'DecisionTreeRegressor': {
+                    'criterion': ['squared_error', 'friedman_mse', 'absolute_error'],
+                    'max_depth': [None, 10, 20, 30]
+                },
+                'LinearRegression': {},
+                'KNeighborsRegressor': {
+                    'n_neighbors': [3, 5, 7],
+                    'weights': ['uniform', 'distance']
+                },
+                'AdaBoostRegressor': {
+                    'n_estimators': [50, 100],
+                    'learning_rate': [0.01, 0.1, 1.0]
+                },
+                'GradientBoostingRegressor': {
+                    'n_estimators': [100],
+                    'learning_rate': [0.01, 0.1],
+                    'max_depth': [3, 5]
+                },
+                'XGBRegressor': {
+                    'n_estimators': [100],
+                    'learning_rate': [0.01, 0.1],
+                    'max_depth': [3, 5]
+                },
+                'CatBoostRegressor': {
+                    'iterations': [100],
+                    'depth': [3, 5],
+                    'learning_rate': [0.01, 0.1]
+                }
+            }
 
-            model_report: dict = evaluate_models(X_train = X_train, y_train = y_train, X_test = X_test, y_test = y_test, models = models)
+            model_report: dict = evaluate_models(X_train = X_train, y_train = y_train, X_test = X_test, y_test = y_test, models = models, parameters = parameters)
 
             best_model_score = max(sorted(model_report.values()))
 
